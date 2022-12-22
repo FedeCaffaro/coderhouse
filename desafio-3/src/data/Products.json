@@ -1,0 +1,119 @@
+[
+  {
+    "id": 1,
+    "code": 1,
+    "price": 100,
+    "title": "Un producto",
+    "description": "Esto es un producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 80000
+  },
+  {
+    "id": 2,
+    "code": 2,
+    "price": 200,
+    "title": "Otro producto",
+    "description": "Esto es otro producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 1
+  },
+  {
+    "id": 3,
+    "code": 3,
+    "price": 200,
+    "title": "Otro producto",
+    "description": "Esto es otro producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 1
+  },
+  {
+    "id": 4,
+    "code": 4,
+    "price": 200,
+    "title": "Otro producto",
+    "description": "Esto es otro producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 1
+  },
+  {
+    "id": 5,
+    "code": 5,
+    "price": 200,
+    "title": "Otro producto",
+    "description": "Esto es otro producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 1
+  },
+  {
+    "id": 6,
+    "code": 6,
+    "price": 200,
+    "title": "Otro producto",
+    "description": "Esto es otro producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 1
+  },
+  {
+    "id": 7,
+    "code": 7,
+    "price": 200,
+    "title": "Otro producto",
+    "description": "Esto es otro producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 1
+  },
+  {
+    "id": 8,
+    "code": 8,
+    "price": 200,
+    "title": "Otro producto",
+    "description": "Esto es otro producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 1
+  },
+  {
+    "id": 9,
+    "code": 9,
+    "price": 200,
+    "title": "Otro producto",
+    "description": "Esto es otro producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 1
+  },
+  {
+    "id": 10,
+    "code": 10,
+    "price": 200,
+    "title": "Otro producto",
+    "description": "Esto es otro producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 1
+  },
+  {
+    "id": 11,
+    "code": 15000,
+    "price": 100,
+    "title": "Un producto",
+    "description": "Esto es un producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 80000
+  },
+  {
+    "id": 12,
+    "code": 12,
+    "price": 100,
+    "title": "Un producto",
+    "description": "Esto es un producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 80000
+  },
+  {
+    "id": 13,
+    "code": 18,
+    "price": 100,
+    "title": "Un producto",
+    "description": "Esto es un producto",
+    "thumbnail": "Esto es una foto",
+    "Stock": 80000
+  }
+]
