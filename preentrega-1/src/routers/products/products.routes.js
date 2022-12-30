@@ -1,0 +1,84 @@
+import { Router } from "express";
+import ProductManager from "../../Managers/ProductManager";
+import { uploader } from "../../utils.js";
+
+const productManager = new ProductManager("../../Database/Products.json");
+const router = Router();
+
+//Routes
+
+//GET Methods
+router.get("/", async (req, res) => {
+  const products = await productManager.getProducts();
+  const limit = req.query.limit;
+  if (!limit) {
+    return res.status(200).json({ status: "success", data: products });
+  }
+  res.status(200).json({ status: "success", data: products.slice(0, limit) });
+});
+
+router.get("/:pid", async (req, res) => {
+  const pid = +req.params.pid;
+  if (!pid) {
+    return res.status(400).json({
+      status: "error",
+      data: "ID provided as a parameter must be a number.",
+    });
+  }
+  const product = await productManager.getProductById(pid);
+  if (product.id) {
+    return res.status(200).json({ status: "success", data: product });
+  }
+  res.status(400).json({ status: "error", error: product });
+});
+
+//POST Methods
+router.post("/", uploader.array("thumbnail"), async (req, res) => {
+  const product = req.body;
+  const thumbnail = req.files
+    ? req.files.map((file) => `/img/${file.originalname}`)
+    : []; //add multer, check multer
+  const productObject = {
+    ...product,
+    thumbnail: thumbnail,
+    // price: +product.price,
+    // stock: +product.stock,
+  };
+  const newProduct = await productManager.addProduct(productObject);
+  if (newProduct.title) {
+    return res.status(200).json({ status: "success", data: newProduct });
+  }
+  res.status(400).json({ status: "error", error: newProduct });
+});
+
+//DELETE Methods
+router.delete("/:pid", async (req, res) => {
+  const pid = +req.params.pid;
+  if (!pid) {
+    return res.status(400).json({
+      status: "error",
+      data: "ID provided as a parameter must be a number.",
+    });
+  }
+  const product = await productManager.deleteProduct(pid);
+  if (product.title) {
+    return res.status(200).json({ status: "success", data: product });
+  }
+  res.status(400).json({ status: "error", error: product });
+});
+
+// PUT Methods
+
+router.put("/:pid", uploader.array("thumbnail"), async (req, res) => {
+  const pid = +req.params.pid;
+  const product = req.body;
+  const productTarget = await productManager.getProductById(pid);
+  // const price = (product.price) ? +(product.price) : productTarget.price;
+  // const stock = (product.stock) ? +(product.stock) : productTarget.stock;
+  if (productTarget.title) {
+    return res.status(200).json({ status: "success", data: productTarget });
+  }
+  res.status(400).json({ status: "error", error: productTarget });
+});
+
+export default router;
