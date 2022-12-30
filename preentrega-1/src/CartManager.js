@@ -45,12 +45,12 @@ class CartManager {
     }
   }
 
-  async getCartById(cid) {
+  async getCartById(id) {
     try {
-      const cartsArray = await this.getCarts();
-      const selectedCart = cartsArray.find((cart) => cart.cid === +cid);
+      const savedCarts = await this.getCarts();
+      const selectedCart = savedCarts.find((cart) => cart.id === id);
       if (!selectedCart) {
-        throw new Error(`There is no cart with id:${cid}`);
+        throw new Error(`there is no cart with id:${id}`);
       }
       return selectedCart;
     } catch (error) {
