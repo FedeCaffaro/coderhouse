@@ -94,7 +94,7 @@ class CartManager {
       });
       const cartListString = JSON.stringify(updatedList, null, "\t");
       await writeFile(this.path, cartListString);
-      console.log(`Product id: ${pid} add to cart id: ${targetCart.id}`);
+      console.log(`Product id: ${pid} add to cart id: ${selectedCart.id}`);
       return updatedCart;
     } catch (error) {
       console.log(error);
