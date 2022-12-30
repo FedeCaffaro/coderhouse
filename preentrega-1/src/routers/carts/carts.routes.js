@@ -1,8 +1,8 @@
 import { Router } from "express";
-import CartManager from "../../Managers/CartManager";
+import CartManager from "../../CartManager.js";
 
 const router = Router();
-const cartManager = new CartManager("../../Database/Carts.json");
+const cartManager = new CartManager("./src/Database/Carts.json");
 
 router.post("/", async (req, res) => {
   const newCart = await cartManager.addCart();
@@ -30,7 +30,7 @@ router.get("/:cid", async (req, res) => {
       data: "ID provided as a parameter must be a number.",
     });
   }
-  const cart = await cartManager.getProductById(cid);
+  const cart = await cartManager.getCartById(cid);
   if (cart.id) {
     return res.status(200).json({ status: "success", data: cart });
   }

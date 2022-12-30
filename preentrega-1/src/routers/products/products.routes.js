@@ -1,8 +1,8 @@
 import { Router } from "express";
-import ProductManager from "../../Managers/ProductManager";
+import ProductManager from "../../ProductManager.js";
 import { uploader } from "../../utils.js";
 
-const productManager = new ProductManager("../../Database/Products.json");
+const productManager = new ProductManager("./src/Database/Products.json");
 const router = Router();
 
 //Routes
@@ -36,7 +36,7 @@ router.get("/:pid", async (req, res) => {
 router.post("/", uploader.array("thumbnail"), async (req, res) => {
   const product = req.body;
   const thumbnail = req.files
-    ? req.files.map((file) => `/img/${file.originalname}`)
+    ? req.files.map((file) => `/product_images/${file.originalname}`)
     : []; //add multer, check multer
   const productObject = {
     ...product,
@@ -75,6 +75,8 @@ router.put("/:pid", uploader.array("thumbnail"), async (req, res) => {
   const productTarget = await productManager.getProductById(pid);
   // const price = (product.price) ? +(product.price) : productTarget.price;
   // const stock = (product.stock) ? +(product.stock) : productTarget.stock;
+  const productJson = { ...product };
+  const updateProduct = await productManager.updateProduct(pid, productJson);
   if (productTarget.title) {
     return res.status(200).json({ status: "success", data: productTarget });
   }

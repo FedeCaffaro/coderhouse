@@ -1,12 +1,12 @@
 import { Router } from "express";
-import cartRoutes from "./cart/cart.routes"
-import productRoutes from "./products/products.routes"
+import cartRoutes from "./carts/carts.routes.js"
+import productRoutes from "./products/products.routes.js"
 
 
 const router = Router();
 
 //Routers
-router.use("/cart",cartRoutes);
+router.use("/carts",cartRoutes);
 router.use("/products",productRoutes);
 
 

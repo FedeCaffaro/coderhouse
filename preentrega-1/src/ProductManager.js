@@ -33,10 +33,10 @@ class ProductManager {
       if (!product.description) {
         throw new Error("Description is required");
       }
-      if (!product.price || typeof product.price !== "number") {
+      if (!product.price) {
         throw new Error("Price is required and must be a number");
       }
-      if (!product.stock || typeof product.stock !== "number") {
+      if (!product.stock) {
         throw new Error("Stock is required and must be a number");
       }
       if (!product.category) {

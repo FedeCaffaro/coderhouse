@@ -2,7 +2,7 @@ import { writeFile, readFile } from "fs/promises";
 import { existsSync } from "fs";
 import ProductManager from "./ProductManager.js";
 
-const productManager = new ProductManager("../Database/Products.json");
+const productManager = new ProductManager("./src/Database/Products.json");
 
 class CartManager {
   constructor(path) {
@@ -48,7 +48,7 @@ class CartManager {
   async getCartById(cid) {
     try {
       const cartsArray = await this.getCarts();
-      const selectedCart = cartsArray.find((cart) => cart.cid === cid);
+      const selectedCart = cartsArray.find((cart) => cart.cid === +cid);
       if (!selectedCart) {
         throw new Error(`There is no cart with id:${cid}`);
       }
