@@ -17,7 +17,7 @@ router.post("/:cid/product/:pid", async (req, res) => {
   const pid = +req.params.pid;
   const productAdded = await cartManager.addProductToCart(cid, pid);
   if (productAdded) {
-    return res.status(200).json({ status: "success", data: updatedCart });
+    return res.status(200).json({ status: "success", data: productAdded });
   }
   res.status(400).json({ status: "error", data: productAdded });
 });
