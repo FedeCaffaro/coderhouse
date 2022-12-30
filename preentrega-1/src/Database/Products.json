@@ -1,28 +1,43 @@
-[	{
-    "id": 1,
-    "title": "Pileta",
-    "description": "Una pileta",
-    "code": "1",
-    "price": 1000,
-    "stock": 155,
-    "status": true,
-    "category": "piletas",
-    "thumbnail": [
-        "/img/100x140x35.jpg"
-    ]
-},
-{
-    "id": 2,
-    "title": "Placard",
-    "description": "Un placard",
-    "code": "2",
-    "price": 10000,
-    "stock": 2,
-    "status": true,
-    "category": "placares",
-    "thumbnail": [
-        "/img/cuatro.jpg",
-        "/img/dos.jpg"
-    ]
-}
+[
+	{
+		"id": 2,
+		"title": "Placard",
+		"description": "Un placard",
+		"code": "2",
+		"price": 10000,
+		"stock": 2,
+		"status": true,
+		"category": "placares",
+		"thumbnail": [
+			"/img/cuatro.jpg",
+			"/img/dos.jpg"
+		]
+	},
+	{
+		"id": 2,
+		"title": "Logo",
+		"description": "Marca",
+		"code": "ABC",
+		"price": "10000",
+		"status": "true",
+		"stock": "1",
+		"category": "Digital",
+		"thumbnail": [
+			"/product_images/nmLogo.png"
+		]
+	},
+	{
+		"id": 3,
+		"title": "Logo2",
+		"description": "Marca2",
+		"code": "ABC123",
+		"price": "10000",
+		"status": "true",
+		"stock": "1",
+		"category": "Digital",
+		"thumbnail": [
+			"/product_images/nmLogo.png",
+			"/product_images/nmLogo2.png"
+		]
+	}
 ]
