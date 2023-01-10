@@ -36,8 +36,10 @@ router.get("/:pid", async (req, res) => {
 router.post("/", uploader.array("thumbnail"), async (req, res) => {
   const product = req.body;
   const thumbnail = req.files
-    ? req.files.map((file) => `/product_images/${file.originalname}`)
-    : []; 
+    ? req.files.map(
+        (file) => `http://localhost:8080/product_images/${file.filename}`
+      )
+    : [];
   const productObject = {
     ...product,
     thumbnail: thumbnail,
