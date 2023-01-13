@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 
 router.get("/realTimeProducts", async (req, res) => {
   const productsList = await productManager.getProducts();
-  res.render("index", {
+  res.render("realTimeProducts", {
     products: productsList,
     title: "Real Time Products",
     style: "index.css",
