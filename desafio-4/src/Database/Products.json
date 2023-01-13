@@ -1,0 +1,70 @@
+[
+	{
+		"id": 2,
+		"title": "Placard",
+		"description": "Un placard",
+		"code": "2",
+		"price": 10000,
+		"stock": 2,
+		"status": true,
+		"category": "placares",
+		"thumbnail": [
+			"/img/cuatro.jpg",
+			"/img/dos.jpg"
+		]
+	},
+	{
+		"id": 2,
+		"title": "Logo",
+		"description": "Marca",
+		"code": "ABC",
+		"price": "10000",
+		"status": "true",
+		"stock": "1",
+		"category": "Digital",
+		"thumbnail": [
+			"/product_images/nmLogo.png"
+		]
+	},
+	{
+		"id": 3,
+		"title": "Logo2",
+		"description": "Marca2",
+		"code": "ABC123",
+		"price": "10000",
+		"status": "true",
+		"stock": "1",
+		"category": "Digital",
+		"thumbnail": [
+			"/product_images/nmLogo.png",
+			"/product_images/nmLogo2.png"
+		]
+	},
+	{
+		"id": 4,
+		"title": "Banner",
+		"description": "Banner para OS",
+		"code": "SKU123456",
+		"price": "0.5",
+		"status": "true",
+		"stock": "10420",
+		"category": "Art",
+		"thumbnail": [
+			"http://localhost:8080/product_images/banner.png"
+		]
+	},
+	{
+		"id": 5,
+		"title": "Banner2",
+		"description": "Banner para OS2",
+		"code": "2SKU123456",
+		"price": "0.5",
+		"status": "true",
+		"stock": "10420",
+		"category": "Art",
+		"thumbnail": [
+			"http://localhost:8080/product_images/banner.png",
+			"http://localhost:8080/product_images/NTM_MarcaPNG_08.png"
+		]
+	}
+]
