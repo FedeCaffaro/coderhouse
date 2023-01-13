@@ -6,7 +6,11 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   const products = await productManager.getProducts();
-  res.render("index", { products: products , title: "Products"});
+  res.render("index", {
+    products: products,
+    title: "Products",
+    style: "index.css",
+  });
 });
 
 export default router;

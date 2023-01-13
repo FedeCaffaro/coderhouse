@@ -25,15 +25,15 @@ app.use(express.static(path.resolve(__dirname, "./public")));
 app.use("/api", apiRoutes);
 app.use("/", viewsRoutes);
 
-
 // Listen
 const httpServer = app.listen(PORT, () => {
-  console.log("Server is up an running on port ", PORT);
+  console.log("Listening on port => ", PORT);
 });
 
 // Sockets
-const io = new Server(httpServer);
+const socketServer = new Server(httpServer);
 
-io.on("connection", (socket) => {
+socketServer.on("connection", (socket) => {
   console.log("New client connected!");
+  app.set("socket", socket);
 });
