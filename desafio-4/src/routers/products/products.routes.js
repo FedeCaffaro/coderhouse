@@ -34,6 +34,7 @@ router.get("/:pid", async (req, res) => {
 
 //POST Methods
 router.post("/", uploader.array("thumbnail"), async (req, res) => {
+  const socket = req.socket;
   const product = req.body;
   const thumbnail = req.files
     ? req.files.map(
@@ -47,6 +48,7 @@ router.post("/", uploader.array("thumbnail"), async (req, res) => {
     // stock: +product.stock,
   };
   const newProduct = await productManager.addProduct(productObject);
+  socket.emit("newProduct", newProduct);
   if (newProduct.title) {
     return res.status(200).json({ status: "success", data: newProduct });
   }
