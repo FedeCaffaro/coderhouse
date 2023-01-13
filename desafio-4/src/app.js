@@ -5,7 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import apiRoutes from "./routers/app.routers.js";
-
+import viewsRoutes from "./routers/views/views.routes.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = 8080;
@@ -23,6 +23,8 @@ app.use(express.static(path.resolve(__dirname, "./public")));
 
 //Routes
 app.use("/api", apiRoutes);
+app.use("/", viewsRoutes);
+
 
 // Listen
 const httpServer = app.listen(PORT, () => {
