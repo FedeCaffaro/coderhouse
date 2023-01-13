@@ -6,15 +6,15 @@
         <p id="title">{{this.title}}</p>
         <p>{{this.description}}</p>
         <p>${{this.price}}</p>
-        {{#if this.thumbnail.length}}
+        {{!-- {{#if this.thumbnail.length}} --}}
           {{!-- {{#each this.thumbnail}} --}}
           <div class="thumbnail-container">
             <img src={{this.thumbnail}} alt="" />
           </div>
           {{!-- {{/each}} --}}
-        {{else}}
+        {{!-- {{else}}
           <p id="no-image">no image</p>
-        {{/if}}
+        {{/if}} --}}
       </div>
     </div>
   {{/each}}

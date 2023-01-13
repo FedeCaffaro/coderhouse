@@ -5,9 +5,9 @@ const productManager = new ProductManager("./src/Database/Products.json");
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const products = await productManager.getProducts();
+  const productsList = await productManager.getProducts();
   res.render("index", {
-    products: products,
+    products: productsList,
     title: "Products",
     style: "index.css",
   });
