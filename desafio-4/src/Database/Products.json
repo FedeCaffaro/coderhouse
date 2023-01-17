@@ -138,5 +138,17 @@
 		"thumbnail": [
 			"http://localhost:8080/img/ai.png"
 		]
+	},
+	{
+		"id": 14,
+		"title": "SCZXC",
+		"description": "CXZZC",
+		"code": "5322532",
+		"price": "23523",
+		"stock": "352235",
+		"category": "SDFFSD",
+		"thumbnail": [
+			"http://localhost:8080/img/3030.png"
+		]
 	}
 ]

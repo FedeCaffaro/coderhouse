@@ -1,10 +1,12 @@
 const socket = io();
-const form = document.getElementById("add-realtimeproducts-form");
+const addForm = document.getElementById("add-realtimeproducts-form");
 const productListContainer = document.getElementById("product-list-container");
+// const deleteButton = document.getElementById("delete-button");
+// const deleteForm = document.getElementById("delete-realtimeproducts-form");
 
-form.addEventListener("submit", (event) => {
+addForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const formData = new FormData(form);
+  const formData = new FormData(addForm);
 
   const requestOptions = {
     method: "POST",
@@ -17,7 +19,7 @@ form.addEventListener("submit", (event) => {
     .then((result) => console.log(result))
     .catch((error) => console.log(error));
 
-  form.reset();
+  addForm.reset();
 });
 
 socket.on("newProduct", (data) => {
@@ -45,3 +47,23 @@ socket.on("newProduct", (data) => {
 
   productListContainer.append(newProductFragment);
 });
+
+// deleteForm.addEventListener("submit", (event) => {
+//   event.preventDefault();
+//   console.log("deletelisten");
+//   const formData = new FormData(form);
+//   const requestOptions = {
+//     method: "DELETE",
+//     body: formData,
+//     redirect: "manual",
+//   };
+
+//   fetch("http://localhost:8080/realtimeproducts", requestOptions)
+//     .then((response) => response.json())
+//     .then((result) => console.log(result))
+//     .catch((error) => console.log(error));
+// });
+
+// socket.on("deleteProduct", (data) => {
+//   console.log("Event new product deleted");
+// });

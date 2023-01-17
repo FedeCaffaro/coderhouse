@@ -16,7 +16,17 @@
           {{else}}
             <p id="no-image">no image</p>
           {{/if}}
+          {{!-- <form
+            action="/realtimeproducts/{{this.id}}"
+            id="delete-realtimeproducts-form"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" value="Delete">
+          </form> --}}
         </div>
+
       </div>
     {{/each}}
   </div>
@@ -28,7 +38,7 @@
     enctype="multipart/form-data"
   >
     <h2>Add product</h2>
-    <input type="text" placeholder="title" name="title" required/>
+    <input type="text" placeholder="title" name="title" required />
     <input type="text" placeholder="description" name="description" required />
     <input type="text" placeholder="code" name="code" required />
     <input type="number" placeholder="price" name="price" required />
@@ -37,6 +47,17 @@
     <input type="file" name="thumbnail" multiple />
     <input type="submit" value="Send" />
   </form>
+    {{!-- <form
+    action="/realtimeproducts"
+    id="add-realtimeproducts-form"
+    class="add-product-form"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <h2>Delete product</h2>
+    <input type="number" placeholder="id" name="id" required />
+    <input type="submit" value="Send" />
+  </form> --}}
 </div>
 
 <script src="socket.io/socket.io.js"></script>

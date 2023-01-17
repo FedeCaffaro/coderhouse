@@ -24,6 +24,16 @@ router.get("/realtimeproducts", async (req, res) => {
   });
 });
 
+router.get("/realtimeproducts/:pid", async (req, res) => {
+  const pid = +req.params.pid;
+  const product = await productManager.getProductById(pid);
+  res.render("realTimeProducts", {
+    products: [product],
+    title: "Real Time Products",
+    style: "index.css",
+  });
+});
+
 //POST Methods
 router.post(
   "/realtimeproducts",
@@ -49,5 +59,23 @@ router.post(
     res.status(400).json({ status: "error", error: newProduct });
   }
 );
+
+//DELETE Methods
+router.delete("/realtimeproducts/:pid", async (req, res) => {
+  const pid = +req.params.pid;
+  const socket = req.app.get("socket");
+  if (!pid) {
+    return res.status(400).json({
+      status: "error",
+      data: "ID provided as a parameter must be a number.",
+    });
+  }
+  const product = await productManager.deleteProduct(pid);
+  socket.emit("deleteProduct", product);
+  if (product.title) {
+    return res.status(200).json({ status: "success", data: product });
+  }
+  res.status(400).json({ status: "error", error: product });
+});
 
 export default router;
