@@ -37,8 +37,9 @@ socketServer.on("connection", (socket) => {
   console.log("New client connected!");
 
   // Now all routes & middleware will have access to req.io
-  app.use((req, res, next) => {
-    req.socket = socket;
-    return next();
-  });
+  // app.use((req, res, next) => {
+  //   req.socket = socket;
+  //   return next();
+  // });
+  app.set("socket", socket);
 });

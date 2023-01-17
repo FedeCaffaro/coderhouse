@@ -21,28 +21,23 @@
     {{/each}}
   </div>
   <form
-    action="/api/products"
+    action="/realtimeproducts"
     id="add-realtimeproducts-form"
     class="add-product-form"
     method="post"
     enctype="multipart/form-data"
   >
     <h2>Add product</h2>
-    <input type="text" placeholder="title" name="title" />
+    <input type="text" placeholder="title" name="title" required/>
     <input type="text" placeholder="description" name="description" required />
     <input type="text" placeholder="code" name="code" required />
     <input type="number" placeholder="price" name="price" required />
     <input type="number" placeholder="stock" name="stock" required />
     <input type="text" placeholder="category" name="category" required />
-    <input type="file" name="files" multiple />
-    <label for="input-status"><input
-        type="checkbox"
-        name="status"
-        id="input-status"
-      />Available</label>
+    <input type="file" name="thumbnail" multiple />
     <input type="submit" value="Send" />
   </form>
 </div>
 
 <script src="socket.io/socket.io.js"></script>
-<script src="statics/js/realTimeProducts.js"></script>
+<script src="/js/client.js"></script>

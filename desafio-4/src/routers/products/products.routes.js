@@ -1,5 +1,5 @@
 import { Router } from "express";
-import ProductManager from "../../ProductManager.js";
+import ProductManager from "../../managers/ProductManager.js";
 import { uploader } from "../../utils.js";
 
 const productManager = new ProductManager("./src/Database/Products.json");
@@ -34,12 +34,9 @@ router.get("/:pid", async (req, res) => {
 
 //POST Methods
 router.post("/", uploader.array("thumbnail"), async (req, res) => {
-  const socket = req.socket;
   const product = req.body;
   const thumbnail = req.files
-    ? req.files.map(
-        (file) => `http://localhost:8080/product_images/${file.filename}`
-      )
+    ? req.files.map((file) => `http://localhost:8080/img/${file.filename}`)
     : [];
   const productObject = {
     ...product,
@@ -48,7 +45,6 @@ router.post("/", uploader.array("thumbnail"), async (req, res) => {
     // stock: +product.stock,
   };
   const newProduct = await productManager.addProduct(productObject);
-  socket.emit("newProduct", newProduct);
   if (newProduct.title) {
     return res.status(200).json({ status: "success", data: newProduct });
   }

@@ -9,7 +9,7 @@
 		"stock": "10420",
 		"category": "Art",
 		"thumbnail": [
-			"http://localhost:8080/product_images/banner.png"
+			"http://localhost:8080/img/banner.png"
 		]
 	},
 	{
@@ -22,7 +22,121 @@
 		"stock": "10420",
 		"category": "Art",
 		"thumbnail": [
-			"http://localhost:8080/product_images/NTM_MarcaPNG_08.png"
+			"http://localhost:8080/img/NTM_MarcaPNG_08.png"
+		]
+	},
+	{
+		"id": 3,
+		"title": "asd",
+		"description": "dsa",
+		"code": "1234176",
+		"price": "1",
+		"stock": "21323",
+		"category": "asd",
+		"status": "on",
+		"thumbnail": []
+	},
+	{
+		"id": 4,
+		"title": "asdasd",
+		"description": "asdasdads",
+		"code": "123123123213",
+		"price": "1212321",
+		"stock": "123132",
+		"category": "asdasdas",
+		"thumbnail": []
+	},
+	{
+		"id": 5,
+		"title": "asd",
+		"description": "asd",
+		"code": "ds",
+		"price": "1",
+		"stock": "23",
+		"category": "sadd",
+		"thumbnail": []
+	},
+	{
+		"id": 6,
+		"title": "asddsa",
+		"description": "asddsa",
+		"code": "dssad",
+		"price": "1123",
+		"stock": "23231",
+		"category": "saddasd",
+		"thumbnail": []
+	},
+	{
+		"id": 7,
+		"title": "asd",
+		"description": "prueba",
+		"code": "89",
+		"price": "88",
+		"stock": "88",
+		"category": "asd",
+		"status": "on",
+		"thumbnail": []
+	},
+	{
+		"id": 8,
+		"title": "prueba",
+		"description": "prueba",
+		"code": "777",
+		"price": "777",
+		"stock": "777",
+		"category": "asd",
+		"thumbnail": []
+	},
+	{
+		"id": 9,
+		"title": "asd",
+		"description": "ad",
+		"code": "7",
+		"price": "7",
+		"stock": "7",
+		"category": "asd",
+		"thumbnail": []
+	},
+	{
+		"id": 10,
+		"title": "pr",
+		"description": "pr",
+		"code": "pr",
+		"price": "0",
+		"stock": "0",
+		"category": "por",
+		"thumbnail": []
+	},
+	{
+		"id": 11,
+		"title": "asd",
+		"description": "dsa",
+		"code": "123",
+		"price": "123",
+		"stock": "123",
+		"category": "asd",
+		"thumbnail": []
+	},
+	{
+		"id": 12,
+		"title": "Prueba",
+		"description": "esto es una prueba",
+		"code": "666",
+		"price": "666",
+		"stock": "666",
+		"category": "Orueba",
+		"thumbnail": []
+	},
+	{
+		"id": 13,
+		"title": "asd",
+		"description": "asd",
+		"code": "dsa",
+		"price": "999",
+		"stock": "999",
+		"category": "asd",
+		"thumbnail": [
+			"http://localhost:8080/img/ai.png"
 		]
 	}
 ]
