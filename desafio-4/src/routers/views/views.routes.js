@@ -60,8 +60,8 @@ router.post(
   }
 );
 
-//DELETE Methods
-router.delete("/realtimeproducts/:pid", async (req, res) => {
+//DELETE view
+router.post("/realtimeproducts/:pid", async (req, res) => {
   const pid = +req.params.pid;
   const socket = req.app.get("socket");
   if (!pid) {

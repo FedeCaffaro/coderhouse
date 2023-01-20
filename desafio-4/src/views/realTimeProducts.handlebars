@@ -3,30 +3,29 @@
   <div id="product-list-container">
     {{#each products}}
       <div id="product-list-container">
-        <div id="product-item">
-          <p id="title">{{this.title}}</p>
-          <p>{{this.description}}</p>
-          <p>${{this.price}}</p>
-          {{#if this.thumbnail.length}}
-            {{!-- {{#each this.thumbnail}} --}}
-            <div class="thumbnail-container">
-              <img src={{this.thumbnail}} alt="" />
-            </div>
-            {{!-- {{/each}} --}}
-          {{else}}
-            <p id="no-image">no image</p>
-          {{/if}}
-          {{!-- <form
-            action="/realtimeproducts/{{this.id}}"
-            id="delete-realtimeproducts-form"
-            method="post"
-            enctype="multipart/form-data"
-          >
-            <input type="hidden" name="_method" value="delete">
-            <input type="submit" value="Delete">
-          </form> --}}
-        </div>
+        <div id="{{this.id}}">
+          <div id="product-item">
+            <p id="title">{{this.title}}</p>
+            <p>{{this.description}}</p>
+            <p>${{this.price}}</p>
+            {{#if this.thumbnail.length}}
+              {{!-- {{#each this.thumbnail}} --}}
+              <div class="thumbnail-container">
+                <img src={{this.thumbnail}} alt="" />
+              </div>
+              {{!-- {{/each}} --}}
+            {{else}}
+              <p id="no-image">no image</p>
+            {{/if}}
+            <form>
+              <input
+                value="Remove id:{{this.id}}"
+                onclick="removeDiv({{this.id}})" 
+                type="button"/>
+            </form>
+          </div>
 
+        </div>
       </div>
     {{/each}}
   </div>
@@ -47,18 +46,16 @@
     <input type="file" name="thumbnail" multiple />
     <input type="submit" value="Send" />
   </form>
-    {{!-- <form
-    action="/realtimeproducts"
-    id="add-realtimeproducts-form"
+  <form
+    id="delete-realtimeproducts-form"
     class="add-product-form"
-    method="post"
     enctype="multipart/form-data"
   >
     <h2>Delete product</h2>
     <input type="number" placeholder="id" name="id" required />
-    <input type="submit" value="Send" />
-  </form> --}}
+    <input type="submit" />
+  </form>
 </div>
 
 <script src="socket.io/socket.io.js"></script>
-<script src="/js/client.js"></script>
+<script src="/js/client.js" type="module"></script>

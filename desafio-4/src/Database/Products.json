@@ -150,5 +150,15 @@
 		"thumbnail": [
 			"http://localhost:8080/img/3030.png"
 		]
+	},
+	{
+		"id": 15,
+		"title": "asdasdas",
+		"description": "para banio",
+		"code": "40943221312",
+		"price": "512213",
+		"stock": "213213",
+		"category": "adxasdasd",
+		"thumbnail": []
 	}
 ]
