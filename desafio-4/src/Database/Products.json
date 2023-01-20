@@ -1,18 +1,5 @@
 [
 	{
-		"id": 4,
-		"title": "Banner",
-		"description": "Banner para OS",
-		"code": "SKU123456",
-		"price": "0.5",
-		"status": "true",
-		"stock": "10420",
-		"category": "Art",
-		"thumbnail": [
-			"http://localhost:8080/img/banner.png"
-		]
-	},
-	{
 		"id": 5,
 		"title": "Banner2",
 		"description": "Banner para OS2",
@@ -34,16 +21,6 @@
 		"stock": "21323",
 		"category": "asd",
 		"status": "on",
-		"thumbnail": []
-	},
-	{
-		"id": 4,
-		"title": "asdasd",
-		"description": "asdasdads",
-		"code": "123123123213",
-		"price": "1212321",
-		"stock": "123132",
-		"category": "asdasdas",
 		"thumbnail": []
 	},
 	{
@@ -75,16 +52,6 @@
 		"stock": "88",
 		"category": "asd",
 		"status": "on",
-		"thumbnail": []
-	},
-	{
-		"id": 8,
-		"title": "prueba",
-		"description": "prueba",
-		"code": "777",
-		"price": "777",
-		"stock": "777",
-		"category": "asd",
 		"thumbnail": []
 	},
 	{

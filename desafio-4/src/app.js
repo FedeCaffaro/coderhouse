@@ -11,6 +11,9 @@ const __dirname = path.dirname(__filename);
 const PORT = 8080;
 const app = express();
 
+import ProductManager from "./managers/ProductManager.js";
+const productManager = new ProductManager("./src/Database/Products.json");
+
 // Template Engine
 app.engine("handlebars", handlebars.engine());
 app.set("views", path.resolve(__dirname, "./views"));
@@ -41,5 +44,9 @@ socketServer.on("connection", (socket) => {
   //   req.socket = socket;
   //   return next();
   // });
+  socket.on("deleteProduct", async (data) => {
+    await productManager.deleteProduct(data);
+    // socketServer.emit("deletedProduct",)
+  });
   app.set("socket", socket);
 });

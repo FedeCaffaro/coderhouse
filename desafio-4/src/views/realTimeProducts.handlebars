@@ -17,12 +17,15 @@
             {{else}}
               <p id="no-image">no image</p>
             {{/if}}
-            <form>
+            <form id="delete-realtimeproducts-form">
               <input
-                value="Remove id:{{this.id}}"
-                onclick="removeDiv({{this.id}})" 
-                type="button"/>
+                id="delete-realtimeproducts-button"
+                value="Delete id:{{this.id}}"
+                onclick="removeDiv({{this.id}})"
+                type="button"
+              />
             </form>
+            {{! <button id="delete-realtimeproducts-button">Delete</button> }}
           </div>
 
         </div>

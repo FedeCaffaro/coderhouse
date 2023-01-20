@@ -1,7 +1,7 @@
 const socket = io();
 const addForm = document.getElementById("add-realtimeproducts-form");
 const productListContainer = document.getElementById("product-list-container");
-const deleteForm = document.getElementById("delete-realtimeproducts-form");
+const deleteButton = document.getElementById("delete-realtimeproducts-button");
 // import ProductManager from "../../managers/ProductManager";
 
 addForm.addEventListener("submit", (event) => {
@@ -49,17 +49,8 @@ socket.on("newProduct", (data) => {
 });
 
 function removeDiv(id) {
-  // const productManager = new ProductManager("./src/Database/Products.json");
-  // const deletedProduct = await productManager.deleteProduct(id);
-  socket.emit("deleteProduct", id);
   const elem = document.getElementById(id);
   elem.remove();
+  socket.emit("deleteProduct", id);
   console.log("Removed");
 }
-
-socket.on("deleteProduct", (data) => {
-  console.log("Event new product deleted");
-  // console.log(data);
-  // const elem = document.getElementById(data);
-  // elem.remove();
-});
