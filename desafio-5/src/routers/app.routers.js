@@ -1,13 +1,14 @@
-import { Router } from "express";
-import cartRoutes from "./carts/carts.routes.js";
-import productRoutes from "./products/products.routes.js";
-import chatRoutes from "./chat/chat.routes.js";
+const { Router } = require('express')
+const productsRoutes = require('./products/products.routes')
+const cartRoutes = require('./carts/carts.routes')
+const chatRoutes = require('./chat/chat.routes')
+const sessionRoutes = require('./session/session.routes')
 
-const router = Router();
+const router = Router()
 
-//Routers
-router.use("/carts", cartRoutes);
-router.use("/products", productRoutes);
-router.use("/chat", chatRoutes);
+router.use('/products', productsRoutes)
+router.use('/carts', cartRoutes)
+router.use('/chat', chatRoutes)
+router.use('/session', sessionRoutes)
 
-export default router;
+module.exports = router

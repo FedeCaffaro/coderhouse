@@ -1,106 +1,93 @@
-import { writeFile, readFile } from "fs/promises";
-import { existsSync } from "fs";
-import ProductManager from "./ProductManager.js";
-
-const productManager = new ProductManager("./src/files/Products.json");
+const fs = require('fs/promises')
+const { existsSync } = require('fs');
 
 class CartManager {
-  constructor(path) {
-    this.path = path;
-  }
-
-  async addCart() {
-    try {
-      const cartsArray = await this.getCarts();
-      const newCart = {
-        id: cartsArray.length + 1,
-        products: [],
-      };
-      cartsArray.push(newCart);
-      const cartsArrayString = JSON.stringify(cartsArray, null, "\t");
-      await writeFile(this.path, cartsArrayString);
-      console.log(`Cart with ${newCart.id} successfully added`);
-      return newCart;
-    } catch (error) {
-      console.log(error);
-      return error;
+    constructor(path){
+        this.path = path
     }
-  }
 
-  async getCarts() {
-    try {
-      if (existsSync(this.path)) {
-        const cartsString = await readFile(this.path, "utf-8");
-        const carts = await JSON.parse(cartsString);
-        return carts;
-      } else {
-        console.log(
-          "Start adding carts to the database or check if the path to the database is correct."
-        );
-        return [];
-      }
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  }
-
-  async getCartById(id) {
-    try {
-      const savedCarts = await this.getCarts();
-      const selectedCart = savedCarts.find((cart) => cart.id === id);
-      if (!selectedCart) {
-        throw new Error(`there is no cart with id:${id}`);
-      }
-      return selectedCart;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  }
-
-  async addProductToCart(cid, pid) {
-    try {
-      const product = await productManager.getProductById(pid);
-      if (!product.id) {
-        throw new Error(`Product with id: ${id} non existent`);
-      }
-      const cartsArray = await this.getCarts();
-      const selectedCart = await this.getCartById(cid);
-
-      const selectedProduct = await selectedCart.products.find(
-        (product) => product.product == pid
-      );
-      const updatedProduct = selectedProduct
-        ? {
-            product: selectedProduct.product,
-            quantity: selectedProduct.quantity + 1,
-          }
-        : { product: pid, quantity: 1 };
-
-      const selectedCartFilter = await selectedCart.products.filter(
-        (id) => id.product !== pid
-      );
-      const updatedCart = {
-        ...selectedCart,
-        products: [...selectedCartFilter, updatedProduct],
-      };
-      const updatedList = cartsArray.map((cart) => {
-        if (cart.id === cid) {
-          return updatedCart;
-        } else {
-          return cart;
+    async getCarts() {
+        try{
+            if (!existsSync(this.path)){
+                return []
+            }
+            const carts = await fs.readFile(this.path, 'utf-8')
+            if(!carts.length){
+                return []
+            }
+            const parsedCarts = JSON.parse(carts)
+            return parsedCarts
         }
-      });
-      const cartListString = JSON.stringify(updatedList, null, "\t");
-      await writeFile(this.path, cartListString);
-      console.log(`Product id: ${pid} add to cart id: ${selectedCart.id}`);
-      return updatedCart;
-    } catch (error) {
-      console.log(error);
-      return error;
+        catch(error){
+            console.log(error.message)
+        }
     }
-  }
+
+    async getCartById(id) {
+        try{
+            const savedCarts = await this.getCarts();
+            const selectedCart = savedCarts.find(cart => cart.id === id)
+            if(!selectedCart){
+                return { error:'ERROR: no cart matches the specified ID' }
+            }
+            return selectedCart
+        }
+        catch(error){
+            console.log(error.message)
+        }
+    }
+
+    async addCart(){
+        try{
+            const savedCarts = await this.getCarts()
+            const newId = savedCarts.length > 0 ? savedCarts[savedCarts.length -1 ].id + 1 : 1
+            const newCart = {
+                id: newId,
+                products: []
+            }
+            savedCarts.push(newCart)
+            const CartsString = JSON.stringify(savedCarts, null, '\t')
+            await fs.writeFile(this.path, CartsString)
+            console.log(`New cart added. Amount of carts: ${savedCarts.length}`)
+            return newCart
+        }
+        catch(error){
+            console.log(error.message)
+        }
+    }
+
+    async addProduct(cartId, productId){
+        const allCarts = await this.getCarts()
+        const cart = await this.getCartById(cartId)
+        const cartIndex = allCarts.findIndex(item => item.id === cart.id)
+        if(cart.error){
+            return cart.error
+        }
+        const existingProduct = cart.products.find(prod => prod.product === productId)
+        if(existingProduct){
+            const updatedCart = cart.products.map(prod => {
+                if(prod.product === productId){
+                    return {
+                        product: prod.id,
+                        quantity: ++prod.quantity 
+                    }
+                }else{
+                    return prod
+                }
+            })
+        }else{
+            cart.products.push({
+                product: productId,
+                quantity: 1
+            })
+        }
+        allCarts[cartIndex] = cart
+        const cartString = JSON.stringify(allCarts, null, '\t')
+        await fs.writeFile(this.path, cartString)
+        console.log('product added')
+        return cart
+    }
 }
 
-export default CartManager;
+
+module.exports = CartManager

@@ -1,95 +1,113 @@
-import { Router } from "express";
-import ProductManager from "../../dao/fileManagers/ProductManager.js";
-import { uploader } from "../../utils.js";
-import { ProductManagerMongo } from "../../dao/mongoManagers/product.manager.js";
+const { Router } = require('express')
+const uploader = require('../../utils')
+const ProductManager = require('../../dao/fileManagers/ProductManager')
+const ProductManagerMongo = require('../../dao/mongoManagers/ProductManagerMongo')
+const options = require('../../config/options')
 
-// const system = "mongo";
-// if (system === "filesystem") {
-//   const productManager = new ProductManager("./src/files/Products.json");
-// } else {
-//   const productManager = new ProductManagerMongo();
-// }
+const router = Router()
 
-const productManager = new ProductManagerMongo();
+const productService = new ProductManager(options.fileSystem.productsFileName)
+const productMongoService = new ProductManagerMongo()
 
-const router = Router();
+router.get('/', async (req, res)=>{
+    try {
+        const products = await productMongoService.getProducts(req.query)
+        return res.send({
+            status: 'success',
+            payload: products.docs,
+            totalPages: products.totalPages,
+            prevPage: products.prevPage,
+            nextPage: products.nextPage,
+            page: products.page,
+            hasPrevPage: products.hasPrevPage,
+            hasNextPage: products.hasNextPage,
+            prevLink: null,
+            nexLink: null})
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+})
 
-//Routes
+router.get('/:pid', async (req, res)=>{
+    const id = req.params.pid
+    try {
+        const product = await productMongoService.getProductById(id)
+        res.send({product})
+        
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+})
 
-//GET Methods
-router.get("/", async (req, res) => {
-  const products = await productManager.getProducts();
-  const limit = req.query.limit;
-  if (!limit) {
-    return res.status(200).json({ status: "success", data: products });
-  }
-  res.status(200).json({ status: "success", data: products.slice(0, limit) });
-});
+router.post('/', uploader.array('files'), async (req, res) =>{
+    try {
+        const newProduct = req.body
+        if(req.files){
+            const paths = req.files.map(file => {
+                return {path: file.path,
+                 originalName: file.originalname  
+                }  
+                })
+            newProduct.thumbnails = paths
+        }else{
+            newProduct.thumbnails = []
+        }
+        if(!Object.keys(newProduct).length){
+            throw new Error('Error: Missing product')
+        }
+        const addProduct = await productMongoService.addProduct(newProduct)
+        res.send({
+            status: 'success',
+            added: addProduct
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+})
 
-router.get("/:pid", async (req, res) => {
-  const pid = +req.params.pid;
-  if (!pid) {
-    return res.status(400).json({
-      status: "error",
-      data: "ID provided as a parameter must be a number.",
-    });
-  }
-  const product = await productManager.getProductById(pid);
-  if (product.id) {
-    return res.status(200).json({ status: "success", data: product });
-  }
-  res.status(400).json({ status: "error", error: product });
-});
+router.put('/:pid', async(req, res)=>{
+    const productId = req.params.pid
+    try {
+        if(req.body.id){
+            throw new Error("No id must be provided")
+        }
+        const updateProduct = await productMongoService.updateProduct(productId, req.body)
+        res.send({
+            status: 'success',
+            newProduct: updateProduct
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
 
-//POST Methods
-router.post("/", uploader.array("thumbnail"), async (req, res) => {
-  const product = req.body;
-  const thumbnail = req.files
-    ? req.files.map((file) => `http://localhost:8080/img/${file.filename}`)
-    : [];
-  const productObject = {
-    ...product,
-    thumbnail: thumbnail,
-    // price: +product.price,
-    // stock: +product.stock,
-  };
-  const newProduct = await productManager.addProduct(productObject);
-  if (newProduct.title) {
-    return res.status(200).json({ status: "success", data: newProduct });
-  }
-  res.status(400).json({ status: "error", error: newProduct });
-});
+})
 
-//DELETE Methods
-router.delete("/:pid", async (req, res) => {
-  const pid = +req.params.pid;
-  if (!pid) {
-    return res.status(400).json({
-      status: "error",
-      data: "ID provided as a parameter must be a number.",
-    });
-  }
-  const product = await productManager.deleteProduct(pid);
-  if (product.title) {
-    return res.status(200).json({ status: "success", data: product });
-  }
-  res.status(400).json({ status: "error", error: product });
-});
+router.delete('/:pid', async(req, res)=>{
+    const productId = req.params.pid
+    try {
+        const deleteProduct = await productMongoService.deleteProduct(productId)
+        res.send({
+            status: 'success',
+            deletedProduct: deleteProduct
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+})
 
-// PUT Methods
-
-router.put("/:pid", uploader.array("thumbnail"), async (req, res) => {
-  const pid = +req.params.pid;
-  const product = req.body;
-  const productTarget = await productManager.getProductById(pid);
-  // const price = (product.price) ? +(product.price) : productTarget.price;
-  // const stock = (product.stock) ? +(product.stock) : productTarget.stock;
-  const productJson = { ...product };
-  const updateProduct = await productManager.updateProduct(pid, productJson);
-  if (productTarget.title) {
-    return res.status(200).json({ status: "success", data: productTarget });
-  }
-  res.status(400).json({ status: "error", error: productTarget });
-});
-
-export default router;
+module.exports = router

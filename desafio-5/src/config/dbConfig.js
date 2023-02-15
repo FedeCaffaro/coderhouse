@@ -1,9 +1,11 @@
-import mongoose from "mongoose";
-import { options } from "./options.js";
+const mongoose = require('mongoose')
+const options = require('./options')
 
-mongoose.connect(options.mongoDb.url, (err) => {
-  if (err) {
-    return console.log(err);
-  }
-  console.log("Conexion a la db exitosa");
-});
+
+mongoose.set('strictQuery', false)
+mongoose.connect(options.mongoDB.url, (error) => {
+    if(error){
+        return console.log(`db connection failed: ${error}`)
+    }
+    console.log('connected to db');
+})

@@ -1,54 +1,78 @@
-import { Router } from "express";
-import messageModel from "../../dao/models/message.model.js";
-import productModel from "../../dao/models/product.model.js";
-import { ProductManagerMongo } from "../../dao/mongoManagers/product.manager.js";
-import { CartManagerMongo } from "../../dao/mongoManagers/cart.manager.js";
+const { Router } = require('express')
+const messageModel = require('../../dao/models/message.model')
+const productModel = require('../../dao/models/product.model')
+const ProductManagerMongo = require('../../dao/mongoManagers/ProductManagerMongo')
+const CartManagerMongo = require('../../dao/mongoManagers/CartManagerMongo')
+const { sessionMiddleware } = require('../../middlewares/session.middleware')
+const { authMiddleware } = require('../../middlewares/auth.middleware')
 
-const router = Router();
-const productMongoService = new ProductManagerMongo();
-const cartMongoService = new CartManagerMongo();
+const router = Router()
 
-router.get("/products", async (req, res) => {
-  try {
-    const products = await productMongoService.getProducts(req.query);
-    res.render("index", {
-      title: "E-commerce",
-      styles: "index.css",
-      products: products.docs,
-    });
-  } catch (error) {
-    res.status(400).send({
-      status: "error",
-      error: error.message,
-    });
-  }
-});
+const productMongoService = new ProductManagerMongo()
+const cartMongoService = new CartManagerMongo()
 
-router.get("/cart/:cid", async (req, res) => {
-  const cartId = req.params.cid;
-  try {
-    const cart = await cartMongoService.getCartById(cartId);
-    res.render("cart", {
-      title: "Cart",
-      styles: "cart.css",
-      products: cart.products,
-      cartId: cart._id,
-    });
-  } catch (error) {
-    res.status(400).send({
-      status: "error",
-      error: error.message,
-    });
-  }
-});
+router.get('/', sessionMiddleware, (req, res)=>{
+    res.redirect('/login')
+})
 
-router.get("/chat", async (req, res) => {
-  const messages = await messageModel.find().lean();
-  res.render("chat", {
-    title: "Chatea3",
-    styles: "chat.css",
-    messages,
-  });
-});
+router.get('/register', sessionMiddleware, (req, res)=>{
+    res.render('register', {
+        title: 'Sing Up!',
+        styles: 'register.css'
+    })
+})
 
-export default router;
+router.get('/login', sessionMiddleware, (req, res)=>{
+    res.render('login', {
+        title: 'Login',
+        styles: 'login.css'
+    })
+})
+
+router.get('/products', authMiddleware, async (req, res) => {
+    try {
+        const user = req.session.user
+        const products = await productMongoService.getProducts(req.query)
+        res.render('index', {
+            title: "E-commerce",
+            styles:"index.css",
+            products: products.docs,
+            user: user
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+})
+
+router.get('/cart/:cid', async (req, res) => {
+    const cartId = req.params.cid 
+    try {
+        const cart = await cartMongoService.getCartById(cartId)
+        res.render('cart', {
+            title: "Cart",
+            styles:"cart.css",
+            products: cart.products,
+            cartId: cart._id
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+})
+
+router.get('/chat', async (req,res)=>{
+    const messages = await messageModel.find().lean()
+    res.render('chat', {
+        title: "Super Chat!",
+        styles:"chat.css",
+        messages})
+})
+
+
+
+module.exports = router
