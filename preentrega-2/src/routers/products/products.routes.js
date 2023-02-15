@@ -18,27 +18,39 @@ const router = Router();
 
 //GET Methods
 router.get("/", async (req, res) => {
-  const products = await productManager.getProducts();
-  const limit = req.query.limit;
-  if (!limit) {
-    return res.status(200).json({ status: "success", data: products });
+  try {
+    const products = await productManager.getProducts(req.query);
+    return res.send({
+      status: "success",
+      payload: products.docs,
+      totalPages: products.totalPages,
+      prevPage: products.prevPage,
+      nextPage: products.nextPage,
+      page: products.page,
+      hasPrevPage: products.hasPrevPage,
+      hasNextPage: products.hasNextPage,
+      prevLink: null,
+      nexLink: null,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: "error",
+      error: error.message,
+    });
   }
-  res.status(200).json({ status: "success", data: products.slice(0, limit) });
 });
 
 router.get("/:pid", async (req, res) => {
-  const pid = +req.params.pid;
-  if (!pid) {
-    return res.status(400).json({
+  const id = req.params.pid;
+  try {
+    const product = await productManager.getProductById(id);
+    res.send({ product });
+  } catch (error) {
+    res.status(500).send({
       status: "error",
-      data: "ID provided as a parameter must be a number.",
+      error: error.message,
     });
   }
-  const product = await productManager.getProductById(pid);
-  if (product.id) {
-    return res.status(200).json({ status: "success", data: product });
-  }
-  res.status(400).json({ status: "error", error: product });
 });
 
 //POST Methods
@@ -60,36 +72,42 @@ router.post("/", uploader.array("thumbnail"), async (req, res) => {
   res.status(400).json({ status: "error", error: newProduct });
 });
 
-//DELETE Methods
-router.delete("/:pid", async (req, res) => {
-  const pid = +req.params.pid;
-  if (!pid) {
-    return res.status(400).json({
+router.put("/:pid", async (req, res) => {
+  const productId = req.params.pid;
+  try {
+    if (req.body.id) {
+      throw new Error("No id must be provided");
+    }
+    const updateProduct = await productManager.updateProduct(
+      productId,
+      req.body
+    );
+    res.send({
+      status: "success",
+      newProduct: updateProduct,
+    });
+  } catch (error) {
+    res.status(500).send({
       status: "error",
-      data: "ID provided as a parameter must be a number.",
+      error: error.message,
     });
   }
-  const product = await productManager.deleteProduct(pid);
-  if (product.title) {
-    return res.status(200).json({ status: "success", data: product });
-  }
-  res.status(400).json({ status: "error", error: product });
 });
 
-// PUT Methods
-
-router.put("/:pid", uploader.array("thumbnail"), async (req, res) => {
-  const pid = +req.params.pid;
-  const product = req.body;
-  const productTarget = await productManager.getProductById(pid);
-  // const price = (product.price) ? +(product.price) : productTarget.price;
-  // const stock = (product.stock) ? +(product.stock) : productTarget.stock;
-  const productJson = { ...product };
-  const updateProduct = await productManager.updateProduct(pid, productJson);
-  if (productTarget.title) {
-    return res.status(200).json({ status: "success", data: productTarget });
+router.delete("/:pid", async (req, res) => {
+  const productId = req.params.pid;
+  try {
+    const deleteProduct = await productManager.deleteProduct(productId);
+    res.send({
+      status: "success",
+      deletedProduct: deleteProduct,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: "error",
+      error: error.message,
+    });
   }
-  res.status(400).json({ status: "error", error: productTarget });
 });
 
 export default router;
